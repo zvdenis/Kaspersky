@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+
+namespace ConsoleApplication1
+{
+    internal class Program
+    {
+        class Travel
+        {
+            internal DateTime dt;
+            internal int num;
+        }
+
+        public static void Main()
+        {
+            string line;
+            List<Travel> travels = new List<Travel>();
+            while ((line = Console.ReadLine()) != null && line != "")
+            {
+                string[] lineParts = line.Split(' ');
+                Travel travel = new Travel();
+                string toParse = lineParts[0] + ' ' + lineParts[1];
+                travel.dt = DateTime.ParseExact(toParse, "MM.dd.yyyy H:mm:ss", CultureInfo.InvariantCulture);
+                travel.num = Int32.Parse(lineParts[2]);
+                travels.Add(travel);
+            }
+
+            travels.Sort((x, y) => DateTime.Compare(x.dt, y.dt));
+            for (int i = 0; i < travels.Count; i++)
+            {
+                if (travels[i].num % 3 == 0 && travels[i].num % 5 == 0)
+                {
+                    Console.Write(travels[i].num + " RickAndMorty\n");
+                    continue;
+                }
+
+                if (travels[i].num % 5 == 0)
+                {
+                    Console.Write(travels[i].num + " Morty\n");
+                }
+
+                if (travels[i].num % 3 == 0)
+                {
+                    Console.Write(travels[i].num + " Rick\n");
+                }
+            }
+        }
+    }
+}
